@@ -2,14 +2,10 @@
 #include<iostream>
 #include<ctime>
 #include<cmath>
-#include"into.h"
+#include"bombrush.h"
 using namespace std;
-
+void printWorld(){
+}
 int main(){
     initscr();
-    start_color();
-    clear();
-    noecho();
-    cbreak();
-    into();
 }
