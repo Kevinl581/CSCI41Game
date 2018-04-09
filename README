@@ -1,0 +1,4 @@
+The current plan is to create a top-down game in which the player has control
+of the "player". The goal is to have the player complete a maze while trying
+to defuse as many bombs as possible. The player will be awarded pts per
+hostage saved.
