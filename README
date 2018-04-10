@@ -3,7 +3,10 @@ of the "player". The goal is to have the player complete a maze while trying
 to defuse as many bombs as possible. The player will be awarded pts per
 hostage saved.
 -wire minigame
--variable on bomb to count points
--display time till next detonation at bottom 
+-infinte bomb spawn randomly one after another
+-display time till next detonation at bottom and global
 --based off of heap
+-death walls
+-priority queue 
+-
 
