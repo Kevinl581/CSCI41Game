@@ -3,6 +3,7 @@
 #include<ctime>
 #include<cmath>
 #include"bombrush.h"
+#include"timer.h"
 using namespace std;
 bool wall[100][100];
 bool bomb[100][100];
@@ -10,6 +11,9 @@ void printBombs();
 void ulose(){
     
 }
+
+const unsigned char main_char = 'P';
+const unsigned char BOMB = 'B';
 
 void printWalls(){//Makes a maze within the walls.
 	for(int i=1; i<20; i++){
@@ -31,6 +35,15 @@ void printWalls(){//Makes a maze within the walls.
 		}*/
 }
 
+int index(int i, int j) {
+	while (i < 0) i += 75;
+	while (j < 0) j += 20;
+	if ( i >= 75) i %= 75;
+	if (j >= 20) j %= 20;
+	return (i*20+j);
+}
+
+
 void printWorld(){
     for(int i=0; i<100; i++)
         for(int j=0; j<100; j++){
@@ -50,8 +63,8 @@ void printWorld(){
                 mvaddch(i, j, '|');
                 wall[i][j]=true;
                 }
-            }
-	}
+			}
+		}
 	printWalls();
     printBombs();
 }
@@ -61,9 +74,12 @@ void printBombs(){
    int b=rand()%70;
    if(wall[a][b]!=true){
        bomb[a][b]=true;
-       mvaddch(a, b, 'B');
+	   attron(COLOR_PAIR(2));
+       mvaddch(a, b, BOMB);
+	   attroff(COLOR_PAIR(2));
        return; 
-   }}
+   }
+  }
 }
 
 void init(){
@@ -77,16 +93,18 @@ void erase(int y, int x){
 	if(wall[y] == wall[20]) mvaddch(y, x, '_');
 	else mvaddch(y, x, ' ');
 }
-void gameLoop(char main_char, int row, int col, int ch){
+void gameLoop(int row, int col, int ch){
     if(ch == 'q' || ch =='Q') return;
         printWorld(); 
              // Show the main character on the screen
             mvaddch(row, col, main_char);
          refresh();
-     
+		 int point = 0;
+  		
          for(;;) {
+			 	mvprintw(21, 55,"Points: %d", point);
                   ch = getch();
-            
+           			 
                       if(ch == KEY_LEFT) {
                               erase(row, col);
                               col = col - 1;
@@ -113,9 +131,10 @@ void gameLoop(char main_char, int row, int col, int ch){
                       }
                   if(bomb[row][col]==true)
                   {
-                      bomb[row][col]=false;
+					  bomb[row][col]=false;
+					  point++;
                       printBombs();
-                    
+                     
                    }  
                   if(wall[row][col]==true)
                   {
@@ -129,14 +148,18 @@ void gameLoop(char main_char, int row, int col, int ch){
 int main(){
     //define main character symbol and initial position
     int y = 2, x = 2;
-    char player = 'P';
+    //char player = 'P';
 	srand(time(NULL));
     //printWorld();
     //start ncurses
     init();
+	start_color();
+	init_pair(1,COLOR_MAGENTA,COLOR_BLACK);
+	init_pair(2,COLOR_RED,COLOR_BLACK);
+	init_pair(3,COLOR_WHITE,COLOR_BLACK);
     int input=getch();
     clear();
-    gameLoop(player, y, x, input);
+    gameLoop(y, x, input);
     endwin();
     system("clear");
     return 0;
