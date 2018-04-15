@@ -5,6 +5,8 @@
 #include"bombrush.h"
 using namespace std;
 bool wall[100][100];
+bool bomb[100][100];
+void printBombs();
 void ulose(){
     
 }
@@ -51,7 +53,19 @@ void printWorld(){
             }
 	}
 	printWalls();
+    printBombs();
 }
+void printBombs(){
+  while(true){
+   int a=rand()%20;
+   int b=rand()%70;
+   if(wall[a][b]!=true){
+       bomb[a][b]=true;
+       mvaddch(a, b, 'B');
+       return; 
+   }}
+}
+
 void init(){
 initscr();
    clear();
@@ -70,7 +84,7 @@ void gameLoop(char main_char, int row, int col, int ch){
             mvaddch(row, col, main_char);
          refresh();
      
-           for(;;) {
+         for(;;) {
                   ch = getch();
             
                       if(ch == KEY_LEFT) {
@@ -97,6 +111,12 @@ void gameLoop(char main_char, int row, int col, int ch){
                           mvaddch(row, col, main_char);
                           refresh();
                       }
+                  if(bomb[row][col]==true)
+                  {
+                      bomb[row][col]=false;
+                      printBombs();
+                    
+                   }  
                   if(wall[row][col]==true)
                   {
                       break;
