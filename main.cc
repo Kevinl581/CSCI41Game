@@ -26,13 +26,7 @@ void printWalls(){//Makes a maze within the walls.
 			}
 		}
 	}
-	/*for(int j=1; j<74; j++){
-		int xCord = rand()%74+1;
-    	int yCord = rand()%19+1;
-		if(wall[yCord][xCord] == false)	
-			mvaddch(yCord, xCord, '#');
-			wall[yCord][xCord] = true;
-		}*/
+	
 }
 
 
