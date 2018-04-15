@@ -91,7 +91,7 @@ void gameLoop(int row, int col, int ch){
              // Show the main character on the screen
             mvaddch(row, col, main_char);
          refresh();
-		 int point;
+		 int point = 0;
   		
          for(;;) {
 			 	mvprintw(21, 55,"Points: %d", point);
