@@ -35,14 +35,6 @@ void printWalls(){//Makes a maze within the walls.
 		}*/
 }
 
-int index(int i, int j) {
-	while (i < 0) i += 75;
-	while (j < 0) j += 20;
-	if ( i >= 75) i %= 75;
-	if (j >= 20) j %= 20;
-	return (i*20+j);
-}
-
 
 void printWorld(){
     for(int i=0; i<100; i++)
