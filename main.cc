@@ -136,7 +136,7 @@ void gameLoop(int row, int col, int ch){
                    }  
                   if(wall[row][col]==true)
                   {
-                      break;
+                      ulose(1);
                   }
                   else if(ch == 'q' || ch == 'Q') {
                           break;
@@ -151,6 +151,8 @@ int main(){
     //printWorld();
     //start ncurses
     init();
+	 printw("Proceed to each bomb and defuse. Avoid all obstacles. For bomb type A cut RED wire. For bomb type B cut BLUE wire. For bomb type C cut GREEN wire.");
+
 	start_color();
 	init_pair(1,COLOR_MAGENTA,COLOR_BLACK);
 	init_pair(2,COLOR_RED,COLOR_BLACK);

@@ -18,10 +18,13 @@ class Bomb{
 };
 int xdim, ydim; //world dimensions
 const int MAX_SCORES = 10;
-void ulose() {
+void ulose(int end) {
     clear();
     //cout << "Game Over.";
-    mvprintw(10, 38, "Game Over.");
+    mvprintw(11, 38, "Game Over.");
+	if (end == 1) { mvprintw(10, 38, "You hit a deadly obstacle!");}
+	if (end == 2) { mvprintw(10, 38, "You cut the wrong wire! BOMB DETONATION.");}
+	
     refresh();
     exit(1);
 }
@@ -40,10 +43,13 @@ void defuse(Bomb in) {
 
     // Display bomb color to player
     //  char bombDisplay = in.bombLet;
-    mvprintw(10, 20, "The bomb is ");
-    mvprintw(10, 31, "?");
-    mvprintw(11, 20, "Input number of wire to cut.");
-    mvprintw(12, 20, "1 for RED, 2 for BLUE, 3 for GREEN.");
+    mvprintw(10, 76, "The bomb is type");
+	if (bType == '1'){mvprintw(10, 93, "A");}
+	if (bType == '2'){mvprintw(10, 93, "B");}
+	if (bType == '3'){mvprintw(10, 93, "C");}
+    //mvprintw(10, 88, "?");
+    mvprintw(11, 76, "Input number of wire to cut.");
+    mvprintw(12, 76, "1 for RED, 2 for BLUE, 3 for GREEN.");
 	refresh();
     // receive defuse type input
     dfuseType = getch();
@@ -57,11 +63,18 @@ void defuse(Bomb in) {
 
     // if defuse type does not match bomb type, game over
     if (dfuseType != bType) {
-        ulose();
+        ulose(2);
     }
 	
     // else defuse bomb i.e. remove bomb character, iterate all other bombs down, adjust timer, and add 1 more bomb
-	//
+	//clear text if successful
+	mvprintw(10, 76, "                     ");
+	mvprintw(10, 93, "              ");
+	mvprintw(11, 76, "                                   ");
+	mvprintw(12, 76, "                                       ");
+	mvprintw(13, 76, "                           ");
+	mvprintw(14, 76, "                                   ");
+
 	refresh();
     return;
 }
