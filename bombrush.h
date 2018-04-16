@@ -6,7 +6,7 @@ class Bomb{
         char bombLet;
         int bombType;
     public:
-        Bomb(int newLet, int newType){
+        Bomb(char newLet, int newType){
             bombLet=newLet;
             bombType=newType;
         }
@@ -28,14 +28,15 @@ void ulose() {
 void defuse(Bomb in) {
     //clear line 12, 76 -- feedback line
    initscr();
-   clear();
+   //clear();
    noecho();
    cbreak();
 
     
     mvprintw(12, 76, " ");
     // bombs need type and letter for defusal. letter will be shown to player. from letter, players must guess the type.
-    int dfuseType;
+    char dfuseType;
+	char bType = in.getBombLet();
 
     // Display bomb color to player
     //  char bombDisplay = in.bombLet;
@@ -44,12 +45,14 @@ void defuse(Bomb in) {
     mvprintw(11, 76, "Input number of wire to cut.");
     mvprintw(12, 76, "1 for RED, 2 for BLUE, 3 for GREEN.");
     // receive defuse type input
-    cin >> dfuseType;
+    dfuseType = getch();
 
-    while (dfuseType != (1 || 2 || 3)) {
+
+    while (dfuseType != '1' && dfuseType != '2' && dfuseType != '3') {
         mvprintw(13, 76, "Incorrect input.");
-        mvprintw(14, 76, "Enter 1, 2, or 3, like above.");
-        cin >> dfuseType;
+        mvprintw(14, 76, "Enter 1, 2, or 3, like above.");	
+        //cin >> dfuseType;
+		dfuseType = getch();
     }
 
     // if defuse type does not match bomb type, game over
