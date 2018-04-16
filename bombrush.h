@@ -36,7 +36,7 @@ void defuse(Bomb in) {
     mvprintw(12, 76, " ");
     // bombs need type and letter for defusal. letter will be shown to player. from letter, players must guess the type.
     char dfuseType;
-	char bType = in.getBombLet();
+	char bType = '0' + in.getBombType();
 
     // Display bomb color to player
     //  char bombDisplay = in.bombLet;
@@ -56,7 +56,7 @@ void defuse(Bomb in) {
     }
 
     // if defuse type does not match bomb type, game over
-    if (dfuseType != in.getBombType()) {
+    if (dfuseType != bType) {
         ulose();
     }
 
