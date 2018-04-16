@@ -1,5 +1,6 @@
 #include<ncurses.h>
 #include<iostream>
+#include<unistd.h>
 using namespace std;
 class Bomb{
     private:
@@ -20,9 +21,13 @@ int xdim, ydim; //world dimensions
 const int MAX_SCORES = 10;
 void ulose() {
     clear();
-    //cout << "Game Over.";
-    mvprintw(10, 38, "Game Over.");
-    refresh();
+	refresh();
+    cout << "Game Over.";
+    //mvprintw(10, 38, "Game Over.");
+	cout << endl;
+	sleep(3);
+    //refresh();
+	endwin();
     exit(1);
 }
 void defuse(Bomb in) {
