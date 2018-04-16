@@ -82,7 +82,9 @@ void gameLoop(int row, int col, int ch){
     if(ch == 'q' || ch =='Q') return;
         printWorld(); 
              // Show the main character on the screen
-            mvaddch(row, col, main_char);
+            attron(COLOR_PAIR(1));
+			mvaddch(row, col, main_char);
+			attroff(COLOR_PAIR(1));
          refresh();
 
 		 int point = 0;
@@ -94,25 +96,33 @@ void gameLoop(int row, int col, int ch){
                       if(ch == KEY_LEFT) {
                               erase(row, col);
                               col = col - 1;
-                              mvaddch(row, col, main_char);
-                              refresh();
+                              attron(COLOR_PAIR(1));
+							  mvaddch(row, col, main_char);
+                              attroff(COLOR_PAIR(1));
+							  refresh();
                           }
                   else if(ch == KEY_RIGHT) {
                           erase(row, col);
                           col = col + 1;
-                          mvaddch(row, col, main_char);
-                          refresh();
+                          attron(COLOR_PAIR(1));
+						  mvaddch(row, col, main_char);
+                          attroff(COLOR_PAIR(1));
+						  refresh();
                       }
                  else if(ch == KEY_UP) {
                           erase(row, col);
                          row = row - 1;
-                          mvaddch(row, col, main_char);
-                          refresh();
+                         attron(COLOR_PAIR(1)); 
+						 mvaddch(row, col, main_char);
+                         attroff(COLOR_PAIR(1));
+						 refresh();
                       }
                   else if(ch == KEY_DOWN) {
                           erase(row, col);
                           row = row + 1;
-                          mvaddch(row, col, main_char);
+                          attron(COLOR_PAIR(1));
+						  mvaddch(row, col, main_char);
+						  attroff(COLOR_PAIR(1));
                           refresh();
                       }
                   if(bomb[row][col]==true)
@@ -121,7 +131,7 @@ void gameLoop(int row, int col, int ch){
                       bomb[row][col]=false;
 					  point++;
                       printBombs();
-                      defuse(a);
+                      //defuse(a);
                      
                    }  
                   if(wall[row][col]==true)
