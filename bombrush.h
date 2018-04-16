@@ -6,7 +6,7 @@ class Bomb{
         char bombLet;
         int bombType;
     public:
-        Bomb(int newLet, int newType){
+        Bomb(char newLet, int newType){
             bombLet=newLet;
             bombType=newType;
         }
@@ -39,16 +39,18 @@ void defuse(Bomb in) {
 
     // Display bomb color to player
     //  char bombDisplay = in.bombLet;
-    mvprintw(10, 76, "The bomb is ");
-    mvprintw(10, 88, "?");
-    mvprintw(11, 76, "Input number of wire to cut.");
-    mvprintw(12, 76, "1 for RED, 2 for BLUE, 3 for GREEN.");
+    mvprintw(10, 20, "The bomb is ");
+    mvprintw(10, 31, "?");
+    mvprintw(11, 20, "Input number of wire to cut.");
+    mvprintw(12, 20, "1 for RED, 2 for BLUE, 3 for GREEN.");
+	refresh();
     // receive defuse type input
     cin >> dfuseType;
 
     while (dfuseType != (1 || 2 || 3)) {
-        mvprintw(13, 76, "Incorrect input.");
-        mvprintw(14, 76, "Enter 1, 2, or 3, like above.");
+        mvprintw(13, 20, "Incorrect input.");
+        mvprintw(14, 20, "Enter 1, 2, or 3, like above.");
+		refresh();
         cin >> dfuseType;
     }
 
@@ -56,8 +58,10 @@ void defuse(Bomb in) {
     if (dfuseType != in.getBombType()) {
         ulose();
     }
-
+	
     // else defuse bomb i.e. remove bomb character, iterate all other bombs down, adjust timer, and add 1 more bomb
+	//
+	refresh();
     return;
 }
 
