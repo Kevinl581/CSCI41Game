@@ -1,3 +1,4 @@
+
 #include<ncurses.h>
 #include<iostream>
 #include<ctime>
@@ -8,9 +9,8 @@ using namespace std;
 bool wall[100][100];
 bool bomb[100][100];
 void printBombs();
-void ulose(){
-    
-}
+void defuse(Bomb a);
+void ulose();
 
 const unsigned char main_char = 'P';
 const unsigned char BOMB = 'B';
@@ -84,6 +84,7 @@ void gameLoop(int row, int col, int ch){
              // Show the main character on the screen
             mvaddch(row, col, main_char);
          refresh();
+
 		 int point = 0;
   		
          for(;;) {
@@ -116,9 +117,11 @@ void gameLoop(int row, int col, int ch){
                       }
                   if(bomb[row][col]==true)
                   {
-					  bomb[row][col]=false;
+					  Bomb a('h',rand()%3+1);
+                      bomb[row][col]=false;
 					  point++;
                       printBombs();
+                      defuse(a);
                      
                    }  
                   if(wall[row][col]==true)
