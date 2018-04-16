@@ -1,5 +1,6 @@
 #include<ncurses.h>
 #include<iostream>
+#include<unistd.h>
 using namespace std;
 class Bomb{
     private:
@@ -26,6 +27,16 @@ void ulose(int end) {
 	if (end == 2) { mvprintw(10, 38, "You cut the wrong wire! BOMB DETONATION.");}
 	
     refresh();
+	/*
+	refresh();
+    cout << "Game Over.";
+    //mvprintw(10, 38, "Game Over.");
+	cout << endl;
+	sleep(3);
+    //refresh();
+	*/
+	getch();
+	endwin();
     exit(1);
 }
 void defuse(Bomb in) {
