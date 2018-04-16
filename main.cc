@@ -1,3 +1,4 @@
+
 #include<ncurses.h>
 #include<iostream>
 #include<ctime>
@@ -8,9 +9,8 @@ using namespace std;
 bool wall[100][100];
 bool bomb[100][100];
 void printBombs();
-void ulose(){
-    
-}
+void defuse(Bomb a);
+void ulose();
 
 const unsigned char main_char = 'P';
 const unsigned char BOMB = 'B';
@@ -26,7 +26,6 @@ void printWalls(){//Makes a maze within the walls.
 			}
 		}
 	}
-	
 }
 
 
@@ -83,8 +82,11 @@ void gameLoop(int row, int col, int ch){
     if(ch == 'q' || ch =='Q') return;
         printWorld(); 
              // Show the main character on the screen
-            mvaddch(row, col, main_char);
+            attron(COLOR_PAIR(1));
+			mvaddch(row, col, main_char);
+			attroff(COLOR_PAIR(1));
          refresh();
+
 		 int point = 0;
   		
          for(;;) {
@@ -94,32 +96,42 @@ void gameLoop(int row, int col, int ch){
                       if(ch == KEY_LEFT) {
                               erase(row, col);
                               col = col - 1;
-                              mvaddch(row, col, main_char);
-                              refresh();
+                              attron(COLOR_PAIR(1));
+							  mvaddch(row, col, main_char);
+                              attroff(COLOR_PAIR(1));
+							  refresh();
                           }
                   else if(ch == KEY_RIGHT) {
                           erase(row, col);
                           col = col + 1;
-                          mvaddch(row, col, main_char);
-                          refresh();
+                          attron(COLOR_PAIR(1));
+						  mvaddch(row, col, main_char);
+                          attroff(COLOR_PAIR(1));
+						  refresh();
                       }
                  else if(ch == KEY_UP) {
                           erase(row, col);
                          row = row - 1;
-                          mvaddch(row, col, main_char);
-                          refresh();
+                         attron(COLOR_PAIR(1)); 
+						 mvaddch(row, col, main_char);
+                         attroff(COLOR_PAIR(1));
+						 refresh();
                       }
                   else if(ch == KEY_DOWN) {
                           erase(row, col);
                           row = row + 1;
-                          mvaddch(row, col, main_char);
+                          attron(COLOR_PAIR(1));
+						  mvaddch(row, col, main_char);
+						  attroff(COLOR_PAIR(1));
                           refresh();
                       }
                   if(bomb[row][col]==true)
                   {
-					  bomb[row][col]=false;
+					  Bomb a('h',rand()%3+1);
+                      bomb[row][col]=false;
 					  point++;
                       printBombs();
+                      //defuse(a);
                      
                    }  
                   if(wall[row][col]==true)
