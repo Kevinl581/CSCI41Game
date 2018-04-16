@@ -129,9 +129,9 @@ void gameLoop(int row, int col, int ch){
                   {
 					  Bomb a('h',rand()%3+1);
                       bomb[row][col]=false;
+                      defuse(a);
 					  point++;
-                      printBombs();
-                      //defuse(a);
+					  printBombs();
                      
                    }  
                   if(wall[row][col]==true)
