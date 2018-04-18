@@ -109,11 +109,10 @@ void erase(int y, int x) {
 
 	} else mvaddch(y, x, ' ');
 }
-int gameLoop(int row, int col, int ch) {
+int gameLoop(int row, int col, char ch) {
 	printWorld();
-	refresh();
-
-
+    refresh();
+    char main_char=ch;
 	int point = 0;
 
 	for (;;) {
@@ -124,7 +123,7 @@ int gameLoop(int row, int col, int ch) {
 		attron(COLOR_PAIR(1));
 		mvaddch(row, col, main_char);
 		attroff(COLOR_PAIR(1));
-		ch = getch();
+        int ch = getch();
 
 		if (ch == KEY_LEFT) {
 			erase(row, col);

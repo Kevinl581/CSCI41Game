@@ -119,6 +119,7 @@ void highScore(int a) {
 	timeout(3000);
 	getch();
 	timeout(-1);
+    clear();
 	return;
 }
 void printPlayerName(char a){
