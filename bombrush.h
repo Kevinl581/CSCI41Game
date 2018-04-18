@@ -1,6 +1,11 @@
 #include<ncurses.h>
 #include<iostream>
 #include<unistd.h>
+#include<queue>
+#include<string>
+#include<cstdlib>
+#include <stdlib.h>
+#include <stdio.h>
 using namespace std;
 class Bomb{
     private:
@@ -36,8 +41,10 @@ void ulose(int end) {
     //refresh();
 	*/
 	getch();
-	endwin();
-    exit(1);
+    clear();
+	//endwin();
+   //system("clear");
+    //exit(1);
 }
 void defuse(Bomb in) {
     //clear line 12, 76 -- feedback line
@@ -89,7 +96,15 @@ void defuse(Bomb in) {
 	refresh();
     return;
 }
-
+void highScore(int a){
+     char c[10];
+    sprintf(c, "%d", a);
+   mvprintw(10, 20, "Current High Score is:");
+   mvprintw(10, 45, c);
+    refresh();
+    getch();
+    return;}
+/*
 class Heap
 {
     private:
@@ -167,6 +182,6 @@ class Heap
                 }
             }
 
-        }
-};
+        }*/
+//};
 

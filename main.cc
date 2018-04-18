@@ -11,7 +11,7 @@ bool bomb[100][100];
 void printBombs();
 void defuse(Bomb a);
 void ulose();
-
+void highScore(int a);
 const unsigned char main_char = 'P';
 const unsigned char BOMB = 'B';
 
@@ -78,8 +78,12 @@ void erase(int y, int x){
 	if(wall[y] == wall[20]) mvaddch(y, x, '_');
 	else mvaddch(y, x, ' ');
 }
-void gameLoop(int row, int col, int ch){
-    if(ch == 'q' || ch =='Q') return;
+int gameLoop(int row, int col, int ch){
+    if(ch == 'q' || ch =='Q') {
+        endwin();
+        system("clear");
+        exit(0);
+    }
         printWorld(); 
              // Show the main character on the screen
             attron(COLOR_PAIR(1));
@@ -132,16 +136,18 @@ void gameLoop(int row, int col, int ch){
                       defuse(a);
 					  point++;
 					  printBombs();
-                     
+                     break;
                    }  
                   if(wall[row][col]==true)
                   {
                       ulose(1);
+                      break;
                   }
                   else if(ch == 'q' || ch == 'Q') {
                           break;
+                }
             }
-        }
+         return point;
 }
 int main(){
     //define main character symbol and initial position
@@ -150,7 +156,13 @@ int main(){
 	srand(time(NULL));
     //printWorld();
     //start ncurses
-    init();
+    while(1){
+        for(int i=0; i<100; i++)
+            for(int j=0; j<100; j++){
+                wall[i][j]=0;
+                bomb[i][j]=0;
+                }
+                init();
 	 printw("Proceed to each bomb and defuse. Avoid all obstacles. For bomb type A cut RED wire. For bomb type B cut BLUE wire. For bomb type C cut GREEN wire.");
 
 	start_color();
@@ -159,8 +171,16 @@ int main(){
 	init_pair(3,COLOR_WHITE,COLOR_BLACK);
     int input=getch();
     clear();
-    gameLoop(y, x, input);
+    int score=gameLoop(y, x, input);
+   // endwin();
+    priority_queue<int> highScores;
+    highScores.push(score);
+    highScore(highScores.top());
+   // wall[100][100]={0};
+   // bomb[100][100]={0};
+    //highScores.pop();
     endwin();
     system("clear");
+    }
     return 0;
 }
