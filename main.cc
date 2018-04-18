@@ -168,8 +168,8 @@ int main() {
 	srand(time(NULL));
 	//printWorld();
 	//start ncurses
-	priority_queue<int> highScores;
-    unordered_map<int,char> players;
+	priority_queue<int> highScores; //heap high score
+    unordered_map<int,char> players; //hash highscore
 	while (1) {
 		for (int i = 0; i < 100; i++)
 			for (int j = 0; j < 100; j++) {
@@ -196,10 +196,10 @@ int main() {
 		}
 		clear();
 		int score = gameLoop(y, x, input);
-		highScores.push(score);
-        players[score]=input;
-		highScore(highScores.top());
-        printPlayerName(players[score]);
+		highScores.push(score); //pushes score into heap
+        players[score]=input; //hashes initial to hash table
+		highScore(highScores.top()); //pops high score off heap
+        printPlayerName(players[score]); //uses hash table to to pull high score initial
 		// wall[100][100]={0};
 		// bomb[100][100]={0};
 		//highScores.pop();
