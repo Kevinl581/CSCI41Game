@@ -115,6 +115,7 @@ int gameLoop(int row, int col, char ch) {
     char main_char=ch;
 	int point = 0;
 
+
 	for (;;) {
 		mvprintw(21, 55, "Points: %i", point);
 
@@ -189,6 +190,7 @@ int main() {
 		init_pair(4, COLOR_YELLOW, COLOR_BLACK);
 		init_pair(5, COLOR_CYAN, COLOR_BLACK);
 		char input = getch();
+        if(!isalpha(input))input='P';
 		if (input == 'q' || input == 'Q') {
 			quit();
 		}
