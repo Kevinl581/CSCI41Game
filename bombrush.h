@@ -44,14 +44,14 @@ void ulose(int end) {
 		mvprintw(11, 38, "You cut the wrong wire! BOMB DETONATION.");
 	}
 
-	refresh();
+	//refresh();
 	getch();
 	clear();
 	//endwin();
 	//system("clear");
 	//exit(1);
 }
-void defuse(Bomb in) {
+bool defuse(Bomb in) {
 	//clear line 12, 76 -- feedback line
 	initscr();
 	//clear();
@@ -93,6 +93,9 @@ void defuse(Bomb in) {
 	// if defuse type does not match bomb type, game over
 	if (dfuseType != bType) {
 		ulose(2);
+		return 1;
+		
+
 	}
 
 	// else defuse bomb i.e. remove bomb character, iterate all other bombs down, adjust timer, and add 1 more bomb
@@ -105,7 +108,7 @@ void defuse(Bomb in) {
 	mvprintw(14, 76, "                                   ");
 
 	refresh();
-	return;
+	return 0;
 }
 void highScore(int a) {
 	char c[10];

@@ -9,7 +9,7 @@ using namespace std;
 bool wall[100][100];
 bool bomb[100][100];
 void printBombs();
-void defuse(Bomb a);
+bool defuse(Bomb a);
 void ulose();
 void highScore(int a);
 const unsigned char main_char = 'P';
@@ -21,7 +21,9 @@ void printWalls() { //Makes a maze within the walls.
 			int xcord = rand() % 74 + 1;
 			int ycord = rand() % 19 + 1;
 			if (wall[ycord][xcord] == false) { //Checks if there is no wall in the cordinates.
+				attron(COLOR_PAIR(5));
 				mvaddch(ycord, xcord, '#');//Sets that cordinate
+				attroff(COLOR_PAIR(5));
 				wall[ycord][xcord] = true;//Sets the wall at that cordinate to true.
 			}
 		}
@@ -34,20 +36,26 @@ void printWorld() {
 		for (int j = 0; j < 100; j++) {
 			if (i == 0) {
 				if (j < 76) {
+					attron(COLOR_PAIR(4));
 					mvaddch(i, j, '_');
+					attroff(COLOR_PAIR(4));
 					wall[i][j] = true;
 				}
 			}
 			if (i == 20) {
 				if (j < 76) {
+					attron(COLOR_PAIR(4));
 					mvaddch(i, j, '_');
+					attroff(COLOR_PAIR(4));
 					wall[i + 1][j] = true;
 				}
 			}
 
 			if (j == 0 || j == 75) {
 				if (i < 21 && i > 0) {
+					attron(COLOR_PAIR(4));
 					mvaddch(i, j, '|');
+					attroff(COLOR_PAIR(4));
 					wall[i][j] = true;
 				}
 			}
@@ -75,8 +83,7 @@ void quit() {
 	if (ch == 'Y' || ch == 'y') {
 		system("clear");
 		printf("Thank you for playing.\n");
-		wait(1);
-		//system("clear");
+		wait(1); // Waits 1 second.
 		endwin();
 		exit(0);
 	} else {
@@ -94,56 +101,50 @@ void init() {
 	curs_set(0);
 }
 void erase(int y, int x) {
-	if (wall[y] == wall[20]) mvaddch(y, x, '_');
-	else mvaddch(y, x, ' ');
+	if (wall[y] == wall[20]) {
+		attron(COLOR_PAIR(4));
+		mvaddch(y, x, '_');
+		attroff(COLOR_PAIR(4));
+
+	} else mvaddch(y, x, ' ');
 }
 int gameLoop(int row, int col, int ch) {
 	printWorld();
-	// Show the main character on the screen
-	attron(COLOR_PAIR(1));
-	mvaddch(row, col, main_char);
-	attroff(COLOR_PAIR(1));
 	refresh();
 
 	int point = 0;
 
 	for (;;) {
-		mvprintw(21, 55, "Points: %d", point);
+		mvprintw(21, 55, "Points: %i", point);
+
+
+		// Show the main character on the screen
+		attron(COLOR_PAIR(1));
+		mvaddch(row, col, main_char);
+		attroff(COLOR_PAIR(1));
 		ch = getch();
 
 		if (ch == KEY_LEFT) {
 			erase(row, col);
 			col = col - 1;
-			attron(COLOR_PAIR(1));
-			mvaddch(row, col, main_char);
-			attroff(COLOR_PAIR(1));
 			refresh();
 		} else if (ch == KEY_RIGHT) {
 			erase(row, col);
 			col = col + 1;
-			attron(COLOR_PAIR(1));
-			mvaddch(row, col, main_char);
-			attroff(COLOR_PAIR(1));
 			refresh();
 		} else if (ch == KEY_UP) {
 			erase(row, col);
 			row = row - 1;
-			attron(COLOR_PAIR(1));
-			mvaddch(row, col, main_char);
-			attroff(COLOR_PAIR(1));
 			refresh();
 		} else if (ch == KEY_DOWN) {
 			erase(row, col);
 			row = row + 1;
-			attron(COLOR_PAIR(1));
-			mvaddch(row, col, main_char);
-			attroff(COLOR_PAIR(1));
 			refresh();
 		}
 		if (bomb[row][col] == true) {
 			Bomb a('h', rand() % 3 + 1);
 			bomb[row][col] = false;
-			defuse(a);
+			if(defuse(a))break;
 			point++;
 			printBombs();
 			//break;
@@ -175,13 +176,15 @@ int main() {
 		init();
 		printw("Proceed to each bomb and defuse. Avoid all obstacles.\n");
 		printw("For bomb type A cut RED wire. For bomb type B cut BLUE wire. For bomb type C cut GREEN wire.\n");
-		printw("Press any key to continue.\n");
 		printw("Press Q anytime to quit.\n");
+		printw("Press any key to continue.\n");
 
 		start_color();
 		init_pair(1, COLOR_MAGENTA, COLOR_BLACK);
 		init_pair(2, COLOR_RED, COLOR_BLACK);
 		init_pair(3, COLOR_WHITE, COLOR_BLACK);
+		init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+		init_pair(5, COLOR_CYAN, COLOR_BLACK);
 		int input = getch();
 		if (input == 'q' || input == 'Q') {
 			quit();
