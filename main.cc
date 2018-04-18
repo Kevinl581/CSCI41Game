@@ -5,6 +5,7 @@
 #include<cmath>
 #include"bombrush.h"
 #include"timer.h"
+#include<unordered_map>
 using namespace std;
 bool wall[100][100];
 bool bomb[100][100];
@@ -112,6 +113,7 @@ int gameLoop(int row, int col, int ch) {
 	printWorld();
 	refresh();
 
+
 	int point = 0;
 
 	for (;;) {
@@ -167,6 +169,7 @@ int main() {
 	//printWorld();
 	//start ncurses
 	priority_queue<int> highScores;
+    unordered_map<int,char> players;
 	while (1) {
 		for (int i = 0; i < 100; i++)
 			for (int j = 0; j < 100; j++) {
@@ -177,7 +180,8 @@ int main() {
 		printw("Proceed to each bomb and defuse. Avoid all obstacles.\n");
 		printw("For bomb type A cut RED wire. For bomb type B cut BLUE wire. For bomb type C cut GREEN wire.\n");
 		printw("Press Q anytime to quit.\n");
-		printw("Press any key to continue.\n");
+	//	printw("Press any key to continue.\n");
+        printw("Type your first initial to continue, 'q' to quit \n");
 
 		start_color();
 		init_pair(1, COLOR_MAGENTA, COLOR_BLACK);
@@ -185,14 +189,16 @@ int main() {
 		init_pair(3, COLOR_WHITE, COLOR_BLACK);
 		init_pair(4, COLOR_YELLOW, COLOR_BLACK);
 		init_pair(5, COLOR_CYAN, COLOR_BLACK);
-		int input = getch();
+		char input = getch();
 		if (input == 'q' || input == 'Q') {
 			quit();
 		}
 		clear();
 		int score = gameLoop(y, x, input);
 		highScores.push(score);
+        players[score]=input;
 		highScore(highScores.top());
+        printPlayerName(players[score]);
 		// wall[100][100]={0};
 		// bomb[100][100]={0};
 		//highScores.pop();

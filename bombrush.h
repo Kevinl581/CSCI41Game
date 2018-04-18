@@ -121,7 +121,15 @@ void highScore(int a) {
 	timeout(-1);
 	return;
 }
-/*
+void printPlayerName(char a){
+    const char *b=&a;
+    mvprintw(10, 20, "Made by the player: ");
+    mvprintw(10, 45, b);
+    refresh();
+    timeout(3000);
+    getch();
+    timeout(-1);
+    }/*
 class Heap
 {
     private:
